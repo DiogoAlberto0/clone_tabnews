@@ -1,21 +1,24 @@
 {
-  "name": "clone-tabnews",
-  "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "dev": "next dev"
-  },
-  "author": "",
-  "license": "MIT",
-  "description": "",
-  "dependencies": {
-    "next": "^13.1.6",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
-  },
-  "devDependencies": {
-    "@types/node": "22.10.7",
-    "@types/react": "19.0.7",
-    "typescript": "5.7.3"
-  }
+    "name": "clone-tabnews",
+    "version": "1.0.0",
+    "main": "index.js",
+    "scripts": {
+        "dev": "next dev",
+        "lint:check": "prettier --check .",
+        "lint:fix": "prettier --write ."
+    },
+    "author": "",
+    "license": "MIT",
+    "description": "",
+    "dependencies": {
+        "next": "^13.1.6",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0"
+    },
+    "devDependencies": {
+        "@types/node": "22.10.7",
+        "@types/react": "19.0.7",
+        "prettier": "^3.4.2",
+        "typescript": "5.7.3"
+    }
 }
