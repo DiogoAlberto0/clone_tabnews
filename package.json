@@ -6,8 +6,9 @@
         "dev": "next dev",
         "lint:check": "prettier --check .",
         "lint:fix": "prettier --write .",
-        "test": "vitest",
-        "test:watch": "vitest --watch"
+        "test": "jest",
+        "test:watch": "jest --watch",
+        "database": "docker compose --file infra/compose.yaml up -d"
     },
     "author": "",
     "license": "MIT",

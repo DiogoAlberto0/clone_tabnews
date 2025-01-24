@@ -1,8 +1,5 @@
-import { describe, it, expect } from "vitest";
+test("should return status 200", async () => {
+    const response = await fetch("http://localhost:3000/api/v1/status");
 
-describe("Testando a rota status com o metodo get", () => {
-    it("should return status 200", () => {
-        console.log("hello world");
-        expect(200).toBe(200);
-    });
+    expect(response.status).toBe(200);
 });
