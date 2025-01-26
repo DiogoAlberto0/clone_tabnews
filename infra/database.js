@@ -10,9 +10,14 @@ const query = async (queryDatabase) => {
     });
 
     client.connect();
-    const result = await client.query(queryDatabase);
-    client.end();
-    return result;
+    try {
+        const result = await client.query(queryDatabase);
+        return result;
+    } catch (error) {
+        console.error(error);
+    } finally {
+        client.end();
+    }
 };
 export default {
     query: query,
