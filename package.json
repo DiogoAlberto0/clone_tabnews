@@ -10,12 +10,16 @@
         "test:watch": "jest --watchAll",
         "services:up": "docker compose --file infra/compose.yaml up -d",
         "services:down": "docker compose --file infra/compose.yaml down",
-        "services:stop": "docker compose --file infra/compose.yaml stop"
+        "services:stop": "docker compose --file infra/compose.yaml stop",
+        "migrate:create": "node-pg-migrate -m infra/migrations create",
+        "migrate:up": " node-pg-migrate --envPath .env.development -m infra/migrations up",
+        "migrate:down": " node-pg-migrate --envPath .env.development -m infra/migrations down"
     },
     "author": "",
     "license": "MIT",
     "description": "",
     "dependencies": {
+        "dotenv": "^16.4.7",
         "next": "^13.1.6",
         "pg": "^8.13.1",
         "react": "^18.2.0",
@@ -23,6 +27,7 @@
     },
     "devDependencies": {
         "jest": "^29.7.0",
+        "node-pg-migrate": "^7.9.0",
         "prettier": "^3.4.2",
         "vitest": "^3.0.4"
     }
