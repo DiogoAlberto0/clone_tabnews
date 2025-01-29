@@ -1,7 +1,7 @@
 import { Client } from "pg";
 
-const query = async (queryDatabase) => {
-    const client = new Client({
+const getNewClient = async () => {
+    return await new Client({
         host: process.env.POSTGRES_HOST,
         user: process.env.POSTGRES_USER,
         database: process.env.POSTGRES_DB,
@@ -9,6 +9,10 @@ const query = async (queryDatabase) => {
         password: process.env.POSTGRES_PASSWORD,
         ssl: process.env.NODE_ENV === "production",
     });
+};
+
+const query = async (queryDatabase) => {
+    const client = await getNewClient();
 
     try {
         client.connect();
@@ -28,4 +32,5 @@ const cleanDatabase = async () => {
 export default {
     query,
     cleanDatabase,
+    getNewClient,
 };

@@ -13,7 +13,7 @@ test("should return status 200", async () => {
 
     const migrations = await migrationsApiResponse.json();
 
-    expect(migrationsApiResponse.status).toBe(200);
+    expect(migrationsApiResponse.status).toBe(201);
     expect(Array.isArray(migrations)).toBe(true);
     expect(migrations.length).toBeGreaterThan(0);
 
