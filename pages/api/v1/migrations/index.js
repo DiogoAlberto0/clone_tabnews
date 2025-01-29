@@ -5,16 +5,15 @@ import { join } from "node:path";
 export default async function (request, response) {
     const client = await database.getNewClient();
 
+    const runnerConfig = {
+        dbClient: client,
+        dir: join("infra", "migrations"),
+        direction: "up",
+        dryRun: true,
+        verbose: true,
+        migrationsTable: "pgmigrations",
+    };
     try {
-        const runnerConfig = {
-            dbClient: client,
-            dir: join("infra", "migrations"),
-            direction: "up",
-            dryRun: true,
-            verbose: true,
-            migrationsTable: "pgmigrations",
-        };
-
         if (request.method == "GET") {
             const pendingMigrations = await runner({
                 ...runnerConfig,
