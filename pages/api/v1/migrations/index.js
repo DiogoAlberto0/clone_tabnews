@@ -32,7 +32,7 @@ export default async function (request, response) {
     } catch (error) {
         console.error(error);
         response.status(500).json({
-            error,
+            error: error.message || "Erro desconhecido",
         });
     } finally {
         client.end();
