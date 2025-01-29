@@ -8,7 +8,7 @@ export default async function (request, response) {
     console.log(join("infra", "migrations"));
     const runnerConfig = {
         dbClient: client,
-        dir: `${join("infra", "migrations")}`,
+        dir: join(process.cwd(), "infra", "migrations"),
         direction: "up",
         dryRun: true,
         verbose: true,
