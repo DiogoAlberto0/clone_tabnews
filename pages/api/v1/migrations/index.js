@@ -6,8 +6,6 @@ export default async function (request, response) {
     const client = await database.getNewClient();
 
     try {
-        client.connect();
-
         const runnerConfig = {
             dbClient: client,
             dir: join("infra", "migrations"),
@@ -33,6 +31,7 @@ export default async function (request, response) {
             else return response.status(200).json([...migratedMigrations]);
         }
     } catch (error) {
+        console.error(error);
         response.status(500).json({
             error,
         });

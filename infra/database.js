@@ -1,7 +1,7 @@
 import { Client } from "pg";
 
 const getNewClient = async () => {
-    return await new Client({
+    const dbClient = new Client({
         host: process.env.POSTGRES_HOST,
         user: process.env.POSTGRES_USER,
         database: process.env.POSTGRES_DB,
@@ -9,13 +9,15 @@ const getNewClient = async () => {
         password: process.env.POSTGRES_PASSWORD,
         ssl: process.env.NODE_ENV === "production",
     });
+
+    await dbClient.connect();
+    return dbClient;
 };
 
 const query = async (queryDatabase) => {
     const client = await getNewClient();
 
     try {
-        client.connect();
         const result = await client.query(queryDatabase);
         return result;
     } catch (error) {
