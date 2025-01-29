@@ -7,7 +7,7 @@ const query = async (queryDatabase) => {
         database: process.env.POSTGRES_DB,
         port: process.env.POSTGRES_PORT,
         password: process.env.POSTGRES_PASSWORD,
-        ssl: process.env.NODE_ENV !== "development",
+        ssl: process.env.NODE_ENV === "production",
     });
 
     try {
@@ -20,6 +20,12 @@ const query = async (queryDatabase) => {
         client.end();
     }
 };
+
+const cleanDatabase = async () => {
+    await query("DROP SCHEMA public CASCADE; CREATE SCHEMA public");
+};
+
 export default {
-    query: query,
+    query,
+    cleanDatabase,
 };

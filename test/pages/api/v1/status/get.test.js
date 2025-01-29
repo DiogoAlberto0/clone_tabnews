@@ -11,8 +11,6 @@ test("should return status 200", async () => {
     expect(now.getMonth()).toEqual(parsedUpdatedAt.getMonth());
     expect(now.getYear()).toEqual(parsedUpdatedAt.getYear());
 
-    console.log(body);
-
     expect(body).toEqual({
         updated_at: expect.stringContaining(parsedUpdatedAt.toISOString()),
         dependencies: {
