@@ -5,7 +5,6 @@ import { join } from "node:path";
 export default async function (request, response) {
     const client = await database.getNewClient();
 
-    console.log(join("infra", "migrations"));
     const runnerConfig = {
         dbClient: client,
         dir: join(process.cwd(), "infra", "migrations"),
@@ -36,6 +35,6 @@ export default async function (request, response) {
             error: error.message || "Erro desconhecido",
         });
     } finally {
-        client.end();
+        // client.end();
     }
 }
