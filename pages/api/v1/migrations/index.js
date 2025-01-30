@@ -3,6 +3,12 @@ import { runner } from "node-pg-migrate";
 import { join } from "node:path";
 
 export default async function (request, response) {
+    const allowedMethods = ["POST", "GET"];
+    if (!allowedMethods.includes(request.method)) {
+        return response.status(405).json({
+            error: `Method ${request.method} is not allowed`,
+        });
+    }
     const client = await database.getNewClient();
 
     const runnerConfig = {
@@ -35,6 +41,6 @@ export default async function (request, response) {
             error: error.message || "Erro desconhecido",
         });
     } finally {
-        // client.end();
+        client.end();
     }
 }
