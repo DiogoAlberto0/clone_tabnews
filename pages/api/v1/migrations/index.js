@@ -9,17 +9,21 @@ export default async function (request, response) {
             error: `Method ${request.method} is not allowed`,
         });
     }
-    const client = await database.getNewClient();
 
-    const runnerConfig = {
-        dbClient: client,
-        dir: join(process.cwd(), "infra", "migrations"),
-        direction: "up",
-        dryRun: true,
-        verbose: true,
-        migrationsTable: "pgmigrations",
-    };
+    let client;
+
     try {
+        client = await database.getNewClient();
+
+        const runnerConfig = {
+            dbClient: client,
+            dir: join(process.cwd(), "infra", "migrations"),
+            direction: "up",
+            dryRun: true,
+            verbose: true,
+            migrationsTable: "pgmigrations",
+        };
+
         if (request.method == "GET") {
             const pendingMigrations = await runner({
                 ...runnerConfig,
