@@ -1,4 +1,4 @@
-import { exec } from "node:child_process";
+const { exec } = require("node:child_process");
 
 const reset = "\x1b[0m";
 const green = "\x1b[32m";

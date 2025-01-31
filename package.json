@@ -2,7 +2,6 @@
     "name": "clone-tabnews",
     "version": "1.0.0",
     "main": "index.js",
-    "type": "module",
     "scripts": {
         "dev": "npm run services:up && npm run wait-pg && npm run migrate:up && next dev",
         "lint:check": "prettier --check .",
