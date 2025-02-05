@@ -17,8 +17,8 @@
         "migrate:down": " node-pg-migrate --envPath .env.development -m infra/migrations down",
         "wait-pg": "node infra/scripts/wait-for-postgres.js",
         "wait-next": "node infra/scripts/wait-for-next.js",
-        "lint:check": "prettier --check .",
-        "lint:fix": "prettier --write ."
+        "lint:prettier:check": "prettier --check .",
+        "lint:prettier:fix": "prettier --write ."
     },
     "author": "",
     "license": "MIT",
