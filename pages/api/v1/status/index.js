@@ -1,6 +1,6 @@
 import database from "infra/database.js";
 
-export default async function (request, response) {
+export default async function route(request, response) {
     const createdAt = new Date().toISOString();
 
     const { rows } = await database.query({

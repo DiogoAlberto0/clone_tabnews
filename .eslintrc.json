@@ -1,0 +1,23 @@
+{
+    "root": true,
+    "extends": [
+        "next/core-web-vitals",
+        "plugin:prettier/recommended",
+        "eslint:recommended"
+    ],
+    "overrides": [
+        {
+            "files": ["test/**"],
+            "plugins": ["jest"],
+            "extends": ["plugin:jest/recommended"],
+            "rules": { "jest/prefer-expect-assertions": "off" }
+        }
+    ],
+    "env": {
+        "browser": true,
+        "es6": true
+    },
+    "rules": {
+        "indent": ["error", 4]
+    }
+}
