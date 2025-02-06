@@ -31,8 +31,9 @@ const cleanDatabase = async () => {
     await query("DROP SCHEMA public CASCADE; CREATE SCHEMA public");
 };
 
-export default {
+const database = {
     query,
     cleanDatabase,
     getNewClient,
 };
+export default database;
