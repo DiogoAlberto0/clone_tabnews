@@ -20,7 +20,8 @@
         "lint:next": "next lint --dir .",
         "lint:nesxppxt:fix": "next lint --fix",
         "lint:prettier:check": "prettier --check .",
-        "lint:prettier:fix": "prettier --write ."
+        "lint:prettier:fix": "prettier --write .",
+        "commit": "git cz"
     },
     "author": "",
     "license": "MIT",
@@ -38,6 +39,8 @@
         "@commitlint/cli": "^19.7.1",
         "@commitlint/config-conventional": "^19.7.1",
         "@eslint/js": "^9.19.0",
+        "commitizen": "^4.3.1",
+        "cz-conventional-changelog": "^3.3.0",
         "eslint": "^9.19.0",
         "eslint-config-next": "15.1.6",
         "eslint-config-prettier": "^10.0.1",
@@ -49,5 +52,10 @@
         "node-pg-migrate": "^7.9.0",
         "prettier": "^3.4.2",
         "vitest": "^3.0.4"
+    },
+    "config": {
+        "commitizen": {
+            "path": "./node_modules/cz-conventional-changelog"
+        }
     }
 }
