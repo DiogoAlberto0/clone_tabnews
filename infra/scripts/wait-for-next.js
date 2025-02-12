@@ -5,34 +5,39 @@ const red = "\x1b[31m";
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-const verifyNextActivity = async ({ tries = 50, timePerTry = 1000 } = {}) => {
+
+const print = (message, color) => {
     process.stdout.write(
-        `${yellow} Aguardando servidor next iniciar ${reset}\n\n`,
+        `${color} ${message} ${reset}\n\n`,
     );
+}
+const verifyNextActivity = async ({ tries = 50, timePerTry = 1000 } = {}) => {
+    print('Aguardando servidor next iniciar', yellow)
 
     for (let i = 0; i < tries; i++) {
         try {
             const response = await fetch("http://localhost:3000/api/v1/status");
 
             if (response.ok) {
-                process.stdout.write(`${green} Servidor iniciado ${reset}\n`);
+                print('Servidor iniciado', green)
                 return;
             } else {
-                process.stdout.write(
-                    `${yellow} ${response.status}:${response.statusText} - ${response.url} ${reset}\n`,
-                );
+                print(`${response.status}:${response.statusText} - ${response.url}`, yellow)
             }
 
-            await delay(timePerTry);
         } catch (error) {
-            process.stdout.write(
-                `${yellow} Error: ${error.message} ${yellow} cause: ${error.cause} ${reset}\n`,
-            );
+            print(`Error: ${error.message} ${yellow} cause: ${error.cause}`, yellow)
         }
+        await delay(timePerTry);
     }
-    process.stdout.write(
-        `${red} Número máximo de tentativas excedido. Max:${tries} ${reset}\n`,
-    );
+    print(`Número máximo de tentativas excedido. Max:${tries}`, red)
 };
 
-export { verifyNextActivity };
+(async () => {
+    try {
+        await verifyNextActivity();
+    } catch (error) {
+        console.error('Erro:', error);
+        process.exit(1);
+    }
+})();
