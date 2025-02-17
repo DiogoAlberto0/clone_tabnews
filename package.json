@@ -4,34 +4,27 @@
   "main": "index.js",
   "scripts": {
     "dev": "concurrently -k -n services,next --hide services \"npm run services:watch\" \" npm run wait-pg && next dev\"",
-    
     "pretest": "npm run services:up",
     "jest": "jest --runInBand --verbose --silent=false",
     "test": "concurrently -n next,jest -k --hide next -s command-jest \"next dev\" \"npm run wait-next && npm run jest\"",
     "posttest": "npm run services:stop",
-
     "pretest:watch": "npm run services:up",
     "jest:watch": "jest --runInBand --watch --verbose --silent=false",
     "test:watch": "concurrently -n next,jest -k --hide next -s command-jest \"npm run dev\" \"npm run wait-next && npm run jest:watch\"",
-
     "services:up": "docker compose --file infra/compose.yaml up -d",
     "services:down": "docker compose --file infra/compose.yaml down",
     "services:stop": "docker compose --file infra/compose.yaml stop",
     "services:wait": "npm run services:up && npm run wait-pg",
     "services:watch": "docker compose --file infra/compose.yaml up",
-
     "migrate:create": "node-pg-migrate -m infra/migrations create",
     "migrate:up": " node-pg-migrate --envPath .env.development -m infra/migrations up",
     "migrate:down": " node-pg-migrate --envPath .env.development -m infra/migrations down",
-
     "wait-pg": "node infra/scripts/wait-for-postgres.js",
     "wait-next": "node infra/scripts/wait-for-next.js",
-
     "lint:next": "next lint --dir .",
     "lint:next:fix": "next lint --fix",
     "lint:prettier:check": "prettier --check .",
     "lint:prettier:fix": "prettier --write .",
-
     "commit": "git cz",
     "prepare": "husky"
   },
@@ -45,7 +38,8 @@
     "next": "15.1.7",
     "pg": "8.13.2",
     "react": "19.0.0",
-    "react-dom": "19.0.0"
+    "react-dom": "19.0.0",
+    "swr": "^2.3.2"
   },
   "devDependencies": {
     "@commitlint/cli": "19.7.1",
