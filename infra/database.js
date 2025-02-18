@@ -15,13 +15,15 @@ const getNewClient = async () => {
 };
 
 const query = async (queryDatabase) => {
-    const client = await getNewClient();
+    let client;
 
     try {
+        client = await getNewClient();
         const result = await client.query(queryDatabase);
         return result;
     } catch (error) {
         console.error(error);
+        throw error;
     } finally {
         client.end();
     }
