@@ -7,3 +7,13 @@ export class InternalServerError extends Error {
         this.cause = cause;
     }
 }
+
+export class MethodNotAllowedError extends Error {
+    constructor() {
+        super("Method Is Not Allowed");
+        this.name = "MethodNotAllowedError";
+        this.action =
+            "Verifique se o método acessado está disponivel para o endpoint.";
+        this.statusCode = 405;
+    }
+}
