@@ -2,12 +2,19 @@ import database from "infra/database";
 import { runner } from "node-pg-migrate";
 import { join } from "node:path";
 
-import { createRouter } from "next-connect";
-import { InternalServerError, MethodNotAllowedError } from "infra/errors";
+import { httpRouter } from "infra/httpRouter";
 
-const router = createRouter();
+const { router, handler } = httpRouter();
 
-const postHandller = async (request, response) => {
+const runnerConfig = {
+    dir: join(process.cwd(), "infra", "migrations"),
+    direction: "up",
+    dryRun: true,
+    verbose: true,
+    migrationsTable: "pgmigrations",
+};
+
+const postHandler = async (request, response) => {
     let client;
 
     try {
@@ -27,7 +34,7 @@ const postHandller = async (request, response) => {
     }
 };
 
-const getHandller = async (request, response) => {
+const getHandler = async (request, response) => {
     let client;
     try {
         client = await database.getNewClient();
@@ -42,39 +49,8 @@ const getHandller = async (request, response) => {
     }
 };
 
-router.get(getHandller);
-router.post(postHandller);
+router.get(getHandler);
 
-const onNoMatch = async (request, response) => {
-    const methodNotAllowedError = new MethodNotAllowedError();
+router.post(postHandler);
 
-    return response.status(methodNotAllowedError.statusCode).json({
-        name: methodNotAllowedError.name,
-        message: methodNotAllowedError.message,
-        action: methodNotAllowedError.action,
-        status_code: methodNotAllowedError.statusCode,
-    });
-};
-
-const onError = async (error, request, response) => {
-    const InternalError = new InternalServerError({ cause: error.cause });
-
-    return response.status(InternalError.statusCode).json({
-        name: InternalError.name,
-        message: InternalError.message,
-        action: InternalError.action,
-        status_code: InternalError.statusCode,
-    });
-};
-export default router.handler({
-    onError,
-    onNoMatch,
-});
-
-const runnerConfig = {
-    dir: join(process.cwd(), "infra", "migrations"),
-    direction: "up",
-    dryRun: true,
-    verbose: true,
-    migrationsTable: "pgmigrations",
-};
+export default handler();
