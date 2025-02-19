@@ -3,14 +3,17 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "concurrently -k -n services,next --hide services \"npm run services:watch\" \" npm run wait-pg && next dev\"",
-    "pretest": "npm run services:up",
+    "predev": "npm run services:up",
+    "dev": "npm run wait-pg && next dev",
+    "postdev": "npm run services:down",
+
+    "pretest": "npm run services:down",
     "jest": "jest --runInBand --verbose --silent=false",
-    "test": "concurrently -n next,jest -k --hide next -s command-jest \"next dev\" \"npm run wait-next && npm run jest\"",
-    "posttest": "npm run services:stop",
-    "pretest:watch": "npm run services:up",
-    "jest:watch": "jest --runInBand --watchAll --verbose --silent=false",
-    "test:watch": "concurrently -n next,jest -k --hide next -s command-jest \"npm run dev\" \"npm run wait-next && npm run jest:watch\"",
+    "test": "concurrently -n next,jest -k --hide next -s command-jest \"npm run dev\" \"npm run wait-next && npm run jest\"",
+    "posttest": "npm run services:down",
+
+    "test:watch": "jest --runInBand --watchAll --verbose --silent=false",
+
     "services:up": "docker compose --file infra/compose.yaml up -d",
     "services:down": "docker compose --file infra/compose.yaml down",
     "services:stop": "docker compose --file infra/compose.yaml stop",
