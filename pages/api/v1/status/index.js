@@ -1,41 +1,10 @@
 import database from "infra/database.js";
 
-import { InternalServerError, MethodNotAllowedError } from "infra/errors/index";
+import { httpRouter } from "infra/httpRouter";
 
-import { createRouter } from "next-connect";
+const { router, handler } = httpRouter();
 
-const router = createRouter();
-
-router.get(getHandller);
-
-const onNoMatch = async (request, response) => {
-    const methodNotAllowedError = new MethodNotAllowedError();
-
-    return response.status(methodNotAllowedError.statusCode).json({
-        name: methodNotAllowedError.name,
-        message: methodNotAllowedError.message,
-        action: methodNotAllowedError.action,
-        status_code: methodNotAllowedError.statusCode,
-    });
-};
-
-const onError = async (error, request, response) => {
-    const InternalError = new InternalServerError({ cause: error.cause });
-
-    return response.status(InternalError.statusCode).json({
-        name: InternalError.name,
-        message: InternalError.message,
-        action: InternalError.action,
-        status_code: InternalError.statusCode,
-    });
-};
-
-export default router.handler({
-    onNoMatch,
-    onError,
-});
-
-async function getHandller(request, response) {
+async function getHandler(request, response) {
     const createdAt = new Date().toISOString();
 
     const { rows } = await database.query({
@@ -63,3 +32,7 @@ async function getHandller(request, response) {
         },
     });
 }
+
+router.get(getHandler);
+
+export default handler();
